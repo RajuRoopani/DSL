@@ -45,22 +45,28 @@ class Topic(models.Model):
         ('published', 'Published'),
         ('archived', 'Archived'),
     ]
-    
+    DIFFICULTY_LEVELS = [
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced'),
+    ]
+
     skill = models.ForeignKey(Skill, related_name='topics', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     learning_objectives = models.TextField(blank=True, help_text="Comma-separated learning goals")
-    
+
     order = models.IntegerField(default=0, help_text="Display order within skill")
     estimated_hours = models.FloatField(default=1.0)
+    difficulty = models.CharField(max_length=20, choices=DIFFICULTY_LEVELS, default='beginner')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='published')
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['skill', 'order']
-    
+
     def __str__(self):
         return f"{self.title} ({self.skill.name})"
 
@@ -130,3 +136,41 @@ class UserSkillProgress(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.skill.name} (Level {self.mastery_level})"
+
+
+class Roadmap(models.Model):
+    LEVEL_CHOICES = [
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced'),
+    ]
+    GOAL_CHOICES = [
+        ('interview_prep', 'Interview Prep'),
+        ('portfolio', 'Portfolio Project'),
+        ('general', 'General Learning'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='roadmaps')
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
+    level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
+    hours_per_week = models.IntegerField()
+    goal = models.CharField(max_length=20, choices=GOAL_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'skill')
+
+    def __str__(self):
+        return f"{self.user.username} — {self.skill.name} ({self.level})"
+
+
+class RoadmapTopicProgress(models.Model):
+    roadmap = models.ForeignKey(Roadmap, on_delete=models.CASCADE, related_name='topic_progress')
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('roadmap', 'topic')
+
+    def __str__(self):
+        return f"{self.roadmap} — {self.topic.title} ({'done' if self.completed else 'pending'})"

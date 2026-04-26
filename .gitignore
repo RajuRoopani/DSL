@@ -72,3 +72,9 @@ tmp/
 # Server logs
 server.log
 nohup.out
+.superpowers/
+
+# Node.js
+node_modules/
+client/dist/
+client/.vite/
