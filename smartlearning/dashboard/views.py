@@ -29,8 +29,6 @@ def dashboard_view(request):
         'user_profile': user_profile,
     })
 
-    return render(request, 'dashboard/dashboard.html', {'skill_cards': skill_cards})
-
 
 def leaderboard_view(request):
     return render(request, 'dashboard/leaderboard.html')
