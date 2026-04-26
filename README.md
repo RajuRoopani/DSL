@@ -4,20 +4,29 @@ A full-stack learning management platform with a Django REST API backend and a R
 
 ## ✨ Features
 
-### Smart Learning Path Generator (React Frontend)
-- **4-Step Wizard**: Choose skill → select level → set weekly hours → define goal
-- **Personalized Roadmaps**: Topics filtered by skill level, grouped into weekly chunks
-- **Goal-Based Sorting**: Resources ordered by learning goal (interview prep, portfolio, or general)
-- **Progress Tracking**: Check off topics as you complete them with optimistic UI updates
-- **Timeline View**: Week-by-week roadmap with visual progress indicators
+### Core Features
 
-### Core Platform (Django Backend)
-- **User Authentication**: Sign up, login, and profile management
-- **Skill Catalog**: Curated skills (DSA, Web Development, AI/ML) with topics and resources
-- **Dashboard**: Live skill cards showing enrolled courses and progress percentages
+- **User Authentication**: Sign up, login, and profile management with Django's auth system
+- **Skill Learning Paths**: Curated learning roadmaps with topics and resources
+- **Progress Tracking**: Track XP (experience points), skills learned, and learning streaks
 - **Leaderboard**: Global ranking system with user statistics and badges
 - **Achievements**: Earn badges for milestones and learning streaks
-- **REST API**: Token-authenticated endpoints with pagination and filtering
+- **Activity Logging**: Comprehensive audit trail of user actions
+
+### Advanced Backend
+
+- **Enhanced Profiles**: Bio, avatar, social links, learning goals, and streak tracking
+- **Skill System**: Prerequisites, difficulty levels, categories, and recommendations
+- **User Statistics**: Comprehensive stats with rank, percentile, and learning metrics
+- **REST API**: Complete API with pagination, filtering, search, and token auth
+- **Admin Dashboard**: Fully configured Django admin with rich inline editing
+
+### Beautiful UI
+
+- **Modern Design**: Bootstrap 5 with custom gradients, animations, and shadows
+- **Responsive**: Mobile-first design that works on all devices
+- **Interactive Charts**: Chart.js leaderboard visualization
+- **AJAX Interactions**: Real-time XP updates and profile management
 
 ## 🛠️ Tech Stack
 
@@ -65,6 +74,7 @@ DSL/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Python 3.8+
 - Node.js 18+
 - pip
@@ -72,23 +82,27 @@ DSL/
 ### Backend Setup
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/shiva676466/DSL.git
 cd DSL/smartlearning
 ```
 
 2. **Create virtual environment**
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. **Install dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 4. **Run migrations**
+
 ```bash
 python manage.py migrate
 ```
@@ -137,6 +151,7 @@ Login at `http://localhost:8080/users/login/` → Django authenticates the user,
 ## 📡 API Endpoints
 
 ### Authentication
+
 ```
 POST   /api-token-auth/                    # Get token by username/password
 ```
@@ -211,6 +226,7 @@ npm test
 ```
 
 Run with coverage:
+
 ```bash
 # Django
 coverage run --source='.' manage.py test
