@@ -4,7 +4,8 @@ from api.views import (
     ProfileViewSet, BadgeViewSet, UserBadgeViewSet,
     SkillViewSet, TopicViewSet, ResourceViewSet, UserSkillProgressViewSet,
     ActivityLogViewSet, UserStatisticsViewSet,
-    recommended_skills, skill_categories, leaderboard, user_dashboard_stats
+    recommended_skills, skill_categories, leaderboard, user_dashboard_stats,
+    generate_roadmap_view, get_roadmap_view, update_roadmap_progress,
 )
 
 router = DefaultRouter()
@@ -24,4 +25,7 @@ urlpatterns = [
     path('skill-categories/', skill_categories, name='skill-categories'),
     path('leaderboard/', leaderboard, name='api-leaderboard'),
     path('dashboard-stats/', user_dashboard_stats, name='dashboard-stats'),
+    path('roadmaps/generate', generate_roadmap_view, name='roadmap-generate'),
+    path('roadmaps/<int:roadmap_id>', get_roadmap_view, name='roadmap-get'),
+    path('roadmaps/<int:roadmap_id>/progress', update_roadmap_progress, name='roadmap-progress'),
 ]

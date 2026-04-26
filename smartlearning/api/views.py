@@ -171,7 +171,7 @@ class UserStatisticsViewSet(viewsets.ReadOnlyModelViewSet):
 def recommended_skills(request):
     """Get personalized skill recommendations."""
     user = request.user
-    profile = user.profile
+    profile, _ = Profile.objects.get_or_create(user=user)
     
     # Get skills the user hasn't started
     user_skills = UserSkillProgress.objects.filter(user=user).values_list('skill_id', flat=True)
@@ -217,7 +217,7 @@ def leaderboard(request):
 def user_dashboard_stats(request):
     """Get comprehensive user dashboard statistics."""
     user = request.user
-    profile = user.profile
+    profile, _ = Profile.objects.get_or_create(user=user)
     
     try:
         stats = UserStatistics.objects.get(user=user)
@@ -239,3 +239,79 @@ def user_dashboard_stats(request):
         'current_skills': UserSkillProgressSerializer(current_skills, many=True).data,
         'recent_activity': ActivityLogSerializer(recent_activity, many=True).data,
     })
+
+
+# ── Roadmap endpoints ────────────────────────────────────────────────────────
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def generate_roadmap_view(request):
+    skill_id = request.data.get('skill_id')
+    level = request.data.get('level', 'beginner')
+    goal = request.data.get('goal', 'general')
+
+    try:
+        hours_per_week = int(request.data.get('hours_per_week', 10))
+    except (ValueError, TypeError):
+        return Response({'error': 'hours_per_week must be an integer'}, status=400)
+
+    if not skill_id:
+        return Response({'error': 'skill_id is required'}, status=400)
+    if level not in ('beginner', 'intermediate', 'advanced'):
+        return Response({'error': 'level must be beginner, intermediate, or advanced'}, status=400)
+    if goal not in ('interview_prep', 'portfolio', 'general'):
+        return Response({'error': 'goal must be interview_prep, portfolio, or general'}, status=400)
+    if hours_per_week < 1:
+        return Response({'error': 'hours_per_week must be at least 1'}, status=400)
+
+    from roadmap.utils import generate_roadmap
+    result = generate_roadmap(request.user, skill_id, level, hours_per_week, goal)
+    if result is None:
+        return Response({'error': 'Skill not found'}, status=404)
+    return Response(result)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_roadmap_view(request, roadmap_id):
+    from roadmap.models import Roadmap
+    from roadmap.utils import build_roadmap_response
+    try:
+        roadmap = Roadmap.objects.select_related('skill').get(id=roadmap_id, user=request.user)
+    except Roadmap.DoesNotExist:
+        return Response({'error': 'Roadmap not found'}, status=404)
+    return Response(build_roadmap_response(roadmap))
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def update_roadmap_progress(request, roadmap_id):
+    from roadmap.models import Roadmap, RoadmapTopicProgress, Topic
+    from django.utils import timezone
+
+    topic_id = request.data.get('topic_id')
+    completed = request.data.get('completed')
+
+    if topic_id is None or completed is None:
+        return Response({'error': 'topic_id and completed are required'}, status=400)
+
+    try:
+        roadmap = Roadmap.objects.get(id=roadmap_id, user=request.user)
+    except Roadmap.DoesNotExist:
+        return Response({'error': 'Roadmap not found'}, status=404)
+
+    try:
+        topic = Topic.objects.get(id=topic_id, skill=roadmap.skill)
+    except Topic.DoesNotExist:
+        return Response({'error': 'Topic not found in this roadmap'}, status=404)
+
+    progress, _ = RoadmapTopicProgress.objects.get_or_create(roadmap=roadmap, topic=topic)
+    progress.completed = bool(completed)
+    progress.completed_at = timezone.now() if completed else None
+    progress.save()
+
+    total = Topic.objects.filter(skill=roadmap.skill, status='published').count()
+    done = RoadmapTopicProgress.objects.filter(roadmap=roadmap, completed=True).count()
+    percent = round(done / total * 100) if total > 0 else 0
+
+    return Response({'roadmap_id': roadmap.id, 'percent_complete': percent})
