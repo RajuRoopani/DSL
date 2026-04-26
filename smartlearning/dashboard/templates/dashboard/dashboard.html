@@ -42,13 +42,13 @@
           </div>
         </div>
         <a
-          href="/roadmap/{{ card.roadmap.id }}/"
+          href="/roadmap/generate/?next=/roadmap/{{ card.roadmap.id }}"
           class="btn btn-outline-primary btn-sm mt-auto"
           >Continue Roadmap →</a
         >
         {% else %}
         <a
-          href="/roadmap/generate/?skill={{ card.skill.id }}"
+          href="/roadmap/generate/"
           class="btn btn-primary btn-sm mt-auto"
           >Start Learning →</a
         >
