@@ -8,11 +8,11 @@ def dummy_view(request):
     return HttpResponse('roadmap placeholder')
 
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def generate_view(request):
-    return render(request, 'roadmap/generate.html')
+    return redirect('http://localhost:5173/')
 
 
 class SkillViewSet(viewsets.ModelViewSet):
