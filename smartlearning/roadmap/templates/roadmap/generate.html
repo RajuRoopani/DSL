@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+  <div class="col-lg-10 mx-auto">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="card-title mb-0">🗺️ Learning Roadmap Generator</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-muted mb-4">
+          Select a skill and generate a personalized learning roadmap with
+          recommended topics and resources.
+        </p>
+        <form class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label for="skill-select" class="form-label">Choose a Skill</label>
+            <select
+              id="skill-select"
+              class="form-select form-select-lg"
+            ></select>
+          </div>
+          <div class="col-md-6">
+            <button
+              type="button"
+              id="generate"
+              class="btn btn-primary btn-lg w-100"
+            >
+              ✨ Generate Roadmap
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="roadmap-result" class="mt-4"></div>
+
+<script>
+  // Enhance roadmap result styling
+  const originalRender = () => {
+    const resultDiv = document.getElementById("roadmap-result");
+    if (resultDiv.innerHTML) {
+      const cards = resultDiv.querySelectorAll(".card");
+      cards.forEach((card) => {
+        if (!card.classList.contains("enhanced")) {
+          card.classList.add("enhanced");
+        }
+      });
+    }
+  };
+  setInterval(originalRender, 500);
+</script>
+
+<style>
+  #roadmap-result .card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  #roadmap-result .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  #roadmap-result .card-header {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    border: none;
+  }
+
+  #roadmap-result h5 {
+    color: #6366f1;
+    font-weight: 700;
+    margin-top: 1.5rem;
+  }
+
+  #roadmap-result h5:first-child {
+    margin-top: 0;
+  }
+
+  #roadmap-result ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  #roadmap-result li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  #roadmap-result li:last-child {
+    border-bottom: none;
+  }
+
+  #roadmap-result li::before {
+    content: "📌 ";
+    margin-right: 0.5rem;
+    color: #6366f1;
+  }
+</style>
+
+<script src="/static/js/roadmap.js"></script>
+{% endblock %}

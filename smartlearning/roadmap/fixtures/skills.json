@@ -1,0 +1,16 @@
+[
+    {
+        "model": "roadmap.skill",
+        "pk": 1,
+        "fields": {
+            "name": "Python"
+        }
+    },
+    {
+        "model": "roadmap.skill",
+        "pk": 2,
+        "fields": {
+            "name": "Web Development"
+        }
+    }
+]

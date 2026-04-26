@@ -1,0 +1,59 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title mb-0">👤 Your Profile</h3>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <p class="text-muted">Welcome, <strong>{{ user.username }}</strong></p>
+                    <p class="text-muted">Email: <strong>{{ user.email }}</strong></p>
+                </div>
+
+                <div class="xp-display">
+                    <div>
+                        <div class="xp-label">Total Experience Points</div>
+                        <div class="xp-value" id="xp-value">{{ total_xp }}</div>
+                    </div>
+                    <div style="font-size: 2.5rem;">⭐</div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+                        <h5 class="card-title mb-0">Add Experience Points</h5>
+                    </div>
+                    <div class="card-body">
+                        <form class="d-flex gap-2 align-items-end flex-wrap">
+                            <div class="flex-grow-1" style="min-width: 150px;">
+                                <label for="add-xp" class="form-label">How many XP?</label>
+                                <input id="add-xp" type="number" value="10" class="form-control" min="1" max="1000" />
+                            </div>
+                            <button type="button" id="add-xp-btn" class="btn btn-secondary btn-lg">
+                                ✨ Add XP
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Navigation</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <a href="/roadmap/generate/" class="btn btn-primary w-100">🗺️ Learning Roadmap</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/dashboard/leaderboard/" class="btn btn-success w-100">🏅 Leaderboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/progress.js"></script>
+{% endblock %}

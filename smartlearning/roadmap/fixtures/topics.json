@@ -1,0 +1,29 @@
+[
+    {
+        "model": "roadmap.topic",
+        "pk": 1,
+        "fields": {
+            "skill": 1,
+            "title": "Basics: Syntax & Data Types",
+            "description": "Intro to Python syntax"
+        }
+    },
+    {
+        "model": "roadmap.topic",
+        "pk": 2,
+        "fields": {
+            "skill": 1,
+            "title": "OOP & Modules",
+            "description": "Classes, modules, packaging"
+        }
+    },
+    {
+        "model": "roadmap.topic",
+        "pk": 3,
+        "fields": {
+            "skill": 2,
+            "title": "HTML & CSS",
+            "description": "Fundamentals of the web"
+        }
+    }
+]

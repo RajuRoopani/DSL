@@ -1,0 +1,22 @@
+[
+    {
+        "model": "roadmap.resource",
+        "pk": 1,
+        "fields": {
+            "topic": 1,
+            "title": "Official Tutorial",
+            "url": "https://docs.python.org/3/tutorial/",
+            "resource_type": "doc"
+        }
+    },
+    {
+        "model": "roadmap.resource",
+        "pk": 2,
+        "fields": {
+            "topic": 3,
+            "title": "MDN HTML Guide",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn/HTML",
+            "resource_type": "guide"
+        }
+    }
+]
