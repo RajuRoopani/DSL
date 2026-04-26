@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from roadmap.models import Skill, Topic, UserSkillProgress, Roadmap, RoadmapTopicProgress
+from roadmap.models import Skill, Topic, Roadmap, RoadmapTopicProgress
 
 
+@login_required
 def dashboard_view(request):
     skills = Skill.objects.order_by('-popularity_score', 'name')
 

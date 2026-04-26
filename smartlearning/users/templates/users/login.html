@@ -7,6 +7,7 @@
         <p class="text-muted mt-2">Welcome back to SmartLearning</p>
       </div>
       <div class="card-body">
+        {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
         <form method="post" class="form-group">
           {% csrf_token %}
           <div class="mb-3">
