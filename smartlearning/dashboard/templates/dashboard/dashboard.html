@@ -2,7 +2,7 @@
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
   <h2 class="mb-0">Learning Paths</h2>
-  <a href="http://localhost:5173/" class="btn btn-primary">✨ Generate My Roadmap</a>
+  <a href="/roadmap/generate/" class="btn btn-primary">✨ Generate My Roadmap</a>
 </div>
 
 {% if skill_cards %}
@@ -31,10 +31,10 @@
                    style="width:{{ card.percent_complete }}%"></div>
             </div>
           </div>
-          <a href="http://localhost:5173/roadmap/{{ card.roadmap.id }}"
+          <a href="/roadmap/generate/?next=/roadmap/{{ card.roadmap.id }}"
              class="btn btn-outline-primary btn-sm mt-auto">Continue Roadmap →</a>
         {% else %}
-          <a href="http://localhost:5173/" class="btn btn-primary btn-sm mt-auto">Start Learning →</a>
+          <a href="/roadmap/generate/" class="btn btn-primary btn-sm mt-auto">Start Learning →</a>
         {% endif %}
       </div>
     </div>
@@ -44,7 +44,7 @@
 {% else %}
 <div class="text-center py-5">
   <p class="text-muted mb-3">No courses available yet.</p>
-  <a href="http://localhost:5173/" class="btn btn-primary">Generate Your First Roadmap</a>
+  <a href="/roadmap/generate/" class="btn btn-primary">Generate Your First Roadmap</a>
 </div>
 {% endif %}
 {% endblock %}

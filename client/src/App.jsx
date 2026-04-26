@@ -10,13 +10,14 @@ function TokenCapture() {
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const token = params.get('token')
+    const next = params.get('next') || '/generate'
     if (token) {
       localStorage.setItem('authToken', token)
-      navigate('/generate', { replace: true })
+      navigate(next, { replace: true })
     } else if (!localStorage.getItem('authToken')) {
       window.location.href = 'http://localhost:8080/users/login/'
     } else {
-      navigate('/generate', { replace: true })
+      navigate(next, { replace: true })
     }
   }, [])
 

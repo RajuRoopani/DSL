@@ -8,11 +8,18 @@ def dummy_view(request):
     return HttpResponse('roadmap placeholder')
 
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from rest_framework.authtoken.models import Token
+
+REACT_ORIGIN = 'http://localhost:5173'
 
 
+@login_required
 def generate_view(request):
-    return redirect('http://localhost:5173/')
+    token, _ = Token.objects.get_or_create(user=request.user)
+    next_path = request.GET.get('next', '/')
+    return redirect(f'{REACT_ORIGIN}/?token={token.key}&next={next_path}')
 
 
 class SkillViewSet(viewsets.ModelViewSet):
