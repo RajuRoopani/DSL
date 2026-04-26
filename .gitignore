@@ -72,3 +72,4 @@ tmp/
 # Server logs
 server.log
 nohup.out
+.superpowers/
