@@ -5,6 +5,7 @@ A comprehensive, full-featured learning management and skill-tracking platform b
 ## ✨ Features
 
 ### Core Features
+
 - **User Authentication**: Sign up, login, and profile management with Django's auth system
 - **Skill Learning Paths**: Curated learning roadmaps with topics and resources
 - **Progress Tracking**: Track XP (experience points), skills learned, and learning streaks
@@ -13,6 +14,7 @@ A comprehensive, full-featured learning management and skill-tracking platform b
 - **Activity Logging**: Comprehensive audit trail of user actions
 
 ### Advanced Backend
+
 - **Enhanced Profiles**: Bio, avatar, social links, learning goals, and streak tracking
 - **Skill System**: Prerequisites, difficulty levels, categories, and recommendations
 - **User Statistics**: Comprehensive stats with rank, percentile, and learning metrics
@@ -20,6 +22,7 @@ A comprehensive, full-featured learning management and skill-tracking platform b
 - **Admin Dashboard**: Fully configured Django admin with rich inline editing
 
 ### Beautiful UI
+
 - **Modern Design**: Bootstrap 5 with custom gradients, animations, and shadows
 - **Responsive**: Mobile-first design that works on all devices
 - **Interactive Charts**: Chart.js leaderboard visualization
@@ -79,6 +82,7 @@ smartlearning/
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Python 3.8+
 - pip or conda
 - Git
@@ -86,28 +90,33 @@ smartlearning/
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/shiva676466/DSL.git
 cd DSL/smartlearning
 ```
 
 2. **Create virtual environment**
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. **Install dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 4. **Run migrations**
+
 ```bash
 python manage.py migrate
 ```
 
 5. **Create superuser**
+
 ```bash
 python manage.py createsuperuser
 # Username: admin
@@ -115,6 +124,7 @@ python manage.py createsuperuser
 ```
 
 6. **Load demo data (optional)**
+
 ```bash
 python manage.py loaddata smartlearning/roadmap/fixtures/skills.json
 python manage.py loaddata smartlearning/roadmap/fixtures/topics.json
@@ -122,6 +132,7 @@ python manage.py loaddata smartlearning/roadmap/fixtures/resources.json
 ```
 
 7. **Start development server**
+
 ```bash
 python manage.py runserver
 ```
@@ -141,11 +152,13 @@ Or create your own account via Sign Up.
 ## 📡 API Endpoints
 
 ### Authentication
+
 ```
 POST   /api-token-auth/              # Get token
 ```
 
 ### Users & Profiles
+
 ```
 GET    /api/profiles/                # List profiles
 GET    /api/profiles/{id}/           # Get profile
@@ -154,6 +167,7 @@ GET    /api/badges/                  # Available badges
 ```
 
 ### Skills & Learning
+
 ```
 GET    /api/skills/                  # List skills (filterable, searchable)
 GET    /api/skills/{id}/             # Skill details with topics
@@ -164,6 +178,7 @@ POST   /api/skill-progress/          # Track skill progress
 ```
 
 ### Activity & Stats
+
 ```
 GET    /api/activity/                # My activity logs
 GET    /api/statistics/              # User statistics
@@ -174,6 +189,7 @@ GET    /api/skill-categories/        # Available categories
 ```
 
 ### Query Parameters
+
 - `search=<term>` - Search in results
 - `limit=<n>` - Pagination limit (default: 20)
 - `offset=<n>` - Pagination offset
@@ -184,16 +200,19 @@ GET    /api/skill-categories/        # Available categories
 ## 🧪 Testing
 
 Run the full test suite:
+
 ```bash
 python manage.py test
 ```
 
 Run specific test module:
+
 ```bash
 python manage.py test api.tests.ProfileAPITest
 ```
 
 Run with coverage:
+
 ```bash
 coverage run --source='.' manage.py test
 coverage report
@@ -202,36 +221,43 @@ coverage report
 ## 🎨 UI Pages
 
 ### Public Pages
+
 - **Home** (`/`) - Welcome page with feature highlights
 - **Login** (`/accounts/login/`) - User login form
 - **Sign Up** (`/users/signup/`) - New account registration
 
 ### Authenticated Pages
+
 - **Profile** (`/users/profile/`) - User profile with XP display and add XP button
 - **Roadmap Generator** (`/roadmap/generate/`) - Generate learning paths
 - **Leaderboard** (`/dashboard/leaderboard/`) - Global rankings with Chart.js visualization
 - **Dashboard** (`/dashboard/`) - User statistics overview
 
 ### Admin
+
 - **Admin Panel** (`/admin/`) - Django admin with all models
 
 ## 📊 Models Overview
 
 ### Users App
+
 - **Profile**: Enhanced user profile with streak tracking, social links, learning stats
 - **Badge**: Achievement badges with unlock criteria
 - **UserBadge**: Track earned badges per user
 
 ### Roadmap App
+
 - **Skill**: Learning skills with difficulty, category, prerequisites
 - **Topic**: Topics within skills with learning objectives
 - **Resource**: Learning materials (video, article, course, etc.)
 - **UserSkillProgress**: Track user progress on individual skills
 
 ### Progress App
+
 - **Progress**: XP entries for users
 
 ### Activity App
+
 - **ActivityLog**: Audit trail of user actions
 - **UserStatistics**: Aggregated user learning statistics
 
@@ -240,6 +266,7 @@ coverage report
 ### Settings (smartlearning/settings.py)
 
 Key configurations:
+
 ```python
 DEBUG = True  # Set to False in production
 ALLOWED_HOSTS = ['*']  # Configure for production
@@ -268,16 +295,19 @@ REST_FRAMEWORK = {
 ## 📚 API Usage Examples
 
 ### Get User Profile
+
 ```bash
 curl http://127.0.0.1:8000/api/profiles/1/
 ```
 
 ### Search Skills
+
 ```bash
 curl "http://127.0.0.1:8000/api/skills/?search=Python&difficulty=beginner"
 ```
 
 ### Add XP (Authenticated)
+
 ```bash
 curl -X POST http://127.0.0.1:8000/progress/api/progress/ \
   -H "Authorization: Token YOUR_TOKEN" \
@@ -286,6 +316,7 @@ curl -X POST http://127.0.0.1:8000/progress/api/progress/ \
 ```
 
 ### Get Dashboard Stats (Authenticated)
+
 ```bash
 curl -H "Authorization: Token YOUR_TOKEN" \
   http://127.0.0.1:8000/api/dashboard-stats/
@@ -296,21 +327,25 @@ curl -H "Authorization: Token YOUR_TOKEN" \
 ### Using Gunicorn + Nginx (Production)
 
 1. **Install Gunicorn**
+
 ```bash
 pip install gunicorn
 ```
 
 2. **Collect static files**
+
 ```bash
 python manage.py collectstatic --noinput
 ```
 
 3. **Run with Gunicorn**
+
 ```bash
 gunicorn smartlearning.wsgi:application --bind 0.0.0.0:8000
 ```
 
 4. **Configure Nginx** (reverse proxy)
+
 ```nginx
 server {
     listen 80;
@@ -331,6 +366,7 @@ server {
 ### Using Docker
 
 Create `Dockerfile`:
+
 ```dockerfile
 FROM python:3.14-slim
 WORKDIR /app
@@ -341,6 +377,7 @@ CMD ["gunicorn", "smartlearning.wsgi:application", "--bind", "0.0.0.0:8000"]
 ```
 
 Build and run:
+
 ```bash
 docker build -t smartlearning .
 docker run -p 8000:8000 smartlearning
@@ -349,13 +386,17 @@ docker run -p 8000:8000 smartlearning
 ## 📖 Documentation
 
 ### API Documentation
+
 Full API documentation with request/response examples is available in the code:
+
 - See `api/serializers.py` for field documentation
 - See `api/views.py` for endpoint documentation
 - Test endpoints in `api/tests.py`
 
 ### Model Documentation
+
 Comprehensive model documentation available in:
+
 - `users/models.py` - Profile, Badge models
 - `roadmap/models.py` - Skill, Topic, Resource models
 - `activity/models.py` - ActivityLog, UserStatistics
@@ -363,6 +404,7 @@ Comprehensive model documentation available in:
 ## 🐛 Troubleshooting
 
 ### Migration Errors
+
 ```bash
 # Reset migrations (dev only)
 python manage.py migrate --fake users zero
@@ -370,12 +412,14 @@ python manage.py migrate
 ```
 
 ### Import Errors
+
 ```bash
 # Reinstall packages
 pip install -r requirements.txt --force-reinstall
 ```
 
 ### Database Issues
+
 ```bash
 # Delete and recreate database
 rm db.sqlite3
@@ -409,6 +453,7 @@ Smart Learning Team
 ## 📞 Support
 
 For issues and questions:
+
 - 📧 Email: support@smartlearning.dev
 - 🐛 GitHub Issues: https://github.com/shiva676466/DSL/issues
 - 💬 Discussions: https://github.com/shiva676466/DSL/discussions
